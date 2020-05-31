@@ -11,11 +11,9 @@ import com.hsojo.ojocourse.beans.UserBean;
 import com.hsojo.ojocourse.services.OjoCourseService;
 
 public class MainActivity extends AppCompatActivity {
+    public static UserBean login_user;
     OjoCourseService.User service_user;
     OjoCourseService.Course service_course;
-
-    public static UserBean login_user;
-
     private ViewPager vp_content;
     private TabLayout tl_control;
 

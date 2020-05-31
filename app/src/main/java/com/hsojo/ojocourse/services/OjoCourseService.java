@@ -18,6 +18,41 @@ import retrofit2.http.Path;
 public class OjoCourseService {
     public static String API_URL = "https://ojocourse.hsojo.com";
 
+    public static User generateUser() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(User.class);
+    }
+
+    public static Course generateCourse() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(Course.class);
+    }
+
+    public interface User {
+        @POST("/user/register")
+        Call<BaseResponse<UserInfo>> register(@Body UserRegisterRequest request);
+
+        @POST("/user/bind")
+        Call<BaseResponse<UserInfo>> bind(@Body UserBindRequest request);
+
+        @POST("/user/face/{token}")
+        Call<ResponseBody> face(@Path("token") String token);
+    }
+
+    public interface Course {
+        @POST("/course/info")
+        Call<BaseResponse<CourseInfo>> info(@Body CourseInfoRequest request);
+
+        @POST("/course/query")
+        Call<BaseResponse<CourseQuery>> query(@Body CourseQueryRequest request);
+    }
+
     public static class BaseResponse<T> {
         public T data;
         public int error;
@@ -68,17 +103,6 @@ public class OjoCourseService {
         public String toString() {
             return String.format("<UserInfo name='%s' number='%s' token='%s'>", name, number, token);
         }
-    }
-
-    public interface User {
-        @POST("/user/register")
-        Call<BaseResponse<UserInfo>> register(@Body UserRegisterRequest request);
-
-        @POST("/user/bind")
-        Call<BaseResponse<UserInfo>> bind(@Body UserBindRequest request);
-
-        @POST("/user/face/{token}")
-        Call<ResponseBody> face(@Path("token") String token);
     }
 
     public static class CourseInfoRequest {
@@ -187,29 +211,5 @@ public class OjoCourseService {
                 return String.format("<Course class_='%s' course='%s' day=%d node=%d place='%s' remark='%s' teacher='%s' teacher_spare='%s' type='%s' week=%d>", class_, course, day, node, place, remark, teacher, teacher_spare, type, week);
             }
         }
-    }
-
-    public interface Course {
-        @POST("/course/info")
-        Call<BaseResponse<CourseInfo>> info(@Body CourseInfoRequest request);
-
-        @POST("/course/query")
-        Call<BaseResponse<CourseQuery>> query(@Body CourseQueryRequest request);
-    }
-
-    public static User generateUser() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        return retrofit.create(User.class);
-    }
-
-    public static Course generateCourse() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        return retrofit.create(Course.class);
     }
 }

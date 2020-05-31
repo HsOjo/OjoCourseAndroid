@@ -8,8 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.hsojo.ojocourse.R;
-import com.hsojo.ojocourse.fragments.TableFragment;
 import com.hsojo.ojocourse.fragments.PersonFragment;
+import com.hsojo.ojocourse.fragments.ScheduleFragment;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class MyFragmentPagerAdapter extends androidx.fragment.app.FragmentPagerA
         this.pages_title.add(resources.getString(R.string.person));
 
         this.fragments = new ArrayList<Fragment>();
-        this.fragments.add(new TableFragment());
+        this.fragments.add(new ScheduleFragment());
         this.fragments.add(new PersonFragment());
     }
 
