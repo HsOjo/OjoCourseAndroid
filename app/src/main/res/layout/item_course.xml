@@ -9,43 +9,43 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="256dp"
+        android:layout_width="224dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Course Name"
+        android:text="@string/course"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_teacher"
-        android:layout_width="108dp"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:text="Teacher"
+        android:text="@string/teacher"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_name" />
 
     <TextView
-        android:id="@+id/tv_teacher_spare"
-        android:layout_width="108dp"
+        android:id="@+id/tv_time"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Teacher (Spare)"
+        android:text="@string/time"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="@+id/tv_teacher"
         app:layout_constraintTop_toBottomOf="@+id/tv_teacher" />
 
     <TextView
         android:id="@+id/tv_place"
-        android:layout_width="256dp"
+        android:layout_width="224dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Place"
+        android:text="@string/place"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

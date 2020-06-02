@@ -20,6 +20,7 @@ import com.hsojo.ojocourse.MainActivity;
 import com.hsojo.ojocourse.R;
 import com.hsojo.ojocourse.adapters.CourseListAdapter;
 import com.hsojo.ojocourse.beans.CourseBean;
+import com.hsojo.ojocourse.dialogs.CourseDialog;
 import com.hsojo.ojocourse.services.OjoCourseService;
 
 import java.util.ArrayList;
@@ -72,6 +73,15 @@ public class ScheduleFragment extends Fragment {
 
         adapter_course = new CourseListAdapter(context, this.courses);
         lv_course.setAdapter(adapter_course);
+        lv_course.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CourseBean course = (CourseBean) lv_course.getItemAtPosition(i);
+                CourseDialog dialog = new CourseDialog(course);
+                assert getFragmentManager() != null;
+                dialog.show(getFragmentManager(), dialog.getTag());
+            }
+        });
 
         this.weeks = new ArrayList<>();
         adapter_week = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, this.weeks);
@@ -130,13 +140,13 @@ public class ScheduleFragment extends Fragment {
                     if (body.error == 0) {
                         days.clear();
                         days_map = new HashMap<>();
-                        days_map.put("（全部）", -1);
-                        days.add("（全部）");
+                        days_map.put("(全部)", -1);
+                        days.add("(全部)");
                         int value = 1;
                         int current_day_index = 0;
-                        for (String key : new String[]{"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"}) {
+                        for (String key : new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"}) {
                             if (body.data.current_info.day == value) {
-                                key += "（当前）";
+                                key += " (当前)";
                                 current_day_index = days.size();
                             }
                             days_map.put(key, value);
@@ -147,14 +157,14 @@ public class ScheduleFragment extends Fragment {
 
                         weeks.clear();
                         weeks_map = new HashMap<>();
-                        weeks_map.put("（全部）", -1);
-                        weeks.add("（全部）");
+                        weeks_map.put("(全部)", -1);
+                        weeks.add("(全部)");
 
                         int current_week_index = 0;
                         for (int week : body.data.weeks) {
-                            String key = String.format("第%d周", week);
+                            String key = String.format("%d周", week);
                             if (body.data.current_info.week == week) {
-                                key += "（当前）";
+                                key += " (当前)";
                                 current_week_index = weeks.size();
                             }
                             weeks_map.put(key, week);
