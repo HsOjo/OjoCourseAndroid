@@ -17,11 +17,11 @@ import java.util.ArrayList;
  * Created by goodtonny on 2020/3/26.
  */
 
-public class MyFragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAdapter {
+public class ContentFragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAdapter {
     private ArrayList<String> pages_title;
     private ArrayList<Fragment> fragments;
 
-    public MyFragmentPagerAdapter(@NonNull androidx.fragment.app.FragmentManager fm, Resources resources) {
+    public ContentFragmentPagerAdapter(@NonNull androidx.fragment.app.FragmentManager fm, Resources resources) {
         super(fm);
 
         this.pages_title = new ArrayList<String>();
