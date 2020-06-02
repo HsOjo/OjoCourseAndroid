@@ -19,7 +19,7 @@ public class SplashActivity extends Activity {
             public void run() {
                 startApp();
             }
-        }, 300);
+        }, 600);
     }
 
     private void startApp() {

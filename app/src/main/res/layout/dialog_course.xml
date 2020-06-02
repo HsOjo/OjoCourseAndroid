@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingRight="16dp"
     android:paddingBottom="16dp">
 
     <TextView
@@ -13,12 +14,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/type"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_teacher" />
 
     <TextView
         android:id="@+id/tv_type"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/type"
@@ -32,12 +34,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/teacher"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_place" />
 
     <TextView
         android:id="@+id/tv_teacher"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/teacher"
@@ -51,12 +54,13 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="20dp"
         android:text="@string/remark"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_type" />
 
     <TextView
         android:id="@+id/tv_remark"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/remark"
@@ -70,12 +74,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/place"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_time" />
 
     <TextView
         android:id="@+id/tv_place"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/place"
@@ -89,12 +94,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/time"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_class" />
 
     <TextView
         android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/time"
@@ -108,12 +114,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/class_"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_name" />
 
     <TextView
         android:id="@+id/tv_class"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/class_"
@@ -127,12 +134,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/course"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/course"

@@ -58,8 +58,8 @@ public class CourseListAdapter extends BaseAdapter {
         String day = course.day == -1 ? "" : new String[]{"", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"}[course.day];
         String week = course.week == -1 ? "" : String.format("第%d周", course.week);
         String node = course.node == -1 ? "" : String.format("第%d节", course.node);
-        String time = String.format("%s，%s\n%s", week, day, node);
-        time = time.equals("，\n") ? "(无)" : time;
+        String time = String.format("%s/%s\n%s", week, day, node);
+        time = time.equals("/\n") ? "(无)" : time;
 
         holder.tv_name.setText(course.course);
         holder.tv_teacher.setText(course.teacher + (course.teacher_spare.equals("") ? "" : "," + course.teacher_spare));
