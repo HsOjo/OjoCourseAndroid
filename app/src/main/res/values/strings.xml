@@ -23,4 +23,5 @@
     <string name="teacher">上课老师</string>
     <string name="type">课程性质</string>
     <string name="confirm">确认</string>
+    <string name="message_no_course">这天没课，小朋友你是否很开心？233333</string>
 </resources>

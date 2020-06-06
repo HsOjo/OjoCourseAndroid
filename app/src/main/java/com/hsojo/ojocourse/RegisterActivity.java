@@ -1,5 +1,6 @@
 package com.hsojo.ojocourse;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +11,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hsojo.ojocourse.beans.UserBean;
-import com.hsojo.ojocourse.services.OjoCourseService;
+import com.hsojo.ojocourse.models.UserModel;
+import com.hsojo.ojocourse.services.ojocourse.OjoCourseService;
+import com.hsojo.ojocourse.services.ojocourse.request.UserRegisterRequest;
+import com.hsojo.ojocourse.services.ojocourse.response.BaseResponse;
+import com.hsojo.ojocourse.services.ojocourse.response.UserInfo;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,11 +56,12 @@ public class RegisterActivity extends AppCompatActivity {
                 String number = et_number.getText().toString();
 
                 OjoCourseService.User user = OjoCourseService.generateUser();
-                Call<OjoCourseService.BaseResponse<OjoCourseService.UserInfo>> call_register = user.register(new OjoCourseService.UserRegisterRequest(username, password, number));
-                call_register.enqueue(new Callback<OjoCourseService.BaseResponse<OjoCourseService.UserInfo>>() {
+                Call<BaseResponse<UserInfo>> call_register = user.register(new UserRegisterRequest(username, password, number));
+                call_register.enqueue(new Callback<BaseResponse<UserInfo>>() {
+                    @SuppressLint("DefaultLocale")
                     @Override
-                    public void onResponse(Call<OjoCourseService.BaseResponse<OjoCourseService.UserInfo>> call, Response<OjoCourseService.BaseResponse<OjoCourseService.UserInfo>> response) {
-                        OjoCourseService.BaseResponse<OjoCourseService.UserInfo> body = response.body();
+                    public void onResponse(Call<BaseResponse<UserInfo>> call, Response<BaseResponse<UserInfo>> response) {
+                        BaseResponse<UserInfo> body = response.body();
                         if (body != null) {
                             if (body.error == 0) {
                                 Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show();
@@ -67,13 +72,13 @@ public class RegisterActivity extends AppCompatActivity {
                                         body.data.token
                                 );
                             } else {
-                                Toast.makeText(context, R.string.error_network, Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, body.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<OjoCourseService.BaseResponse<OjoCourseService.UserInfo>> call, Throwable t) {
+                    public void onFailure(Call<BaseResponse<UserInfo>> call, Throwable t) {
                         Toast.makeText(context, R.string.error_network, Toast.LENGTH_LONG).show();
                     }
                 });
@@ -82,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void callbackRegister(String username, String name, String number, String token) {
-        UserBean login_user = new UserBean(username, name, number, token);
+        UserModel login_user = new UserModel(username, name, number, token);
         login_user.saveData(this.getApplicationContext());
         MainActivity.login_user = login_user;
         this.startActivity(new Intent(this, MainActivity.class));

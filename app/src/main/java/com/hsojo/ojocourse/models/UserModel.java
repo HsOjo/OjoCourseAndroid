@@ -1,22 +1,22 @@
-package com.hsojo.ojocourse.beans;
+package com.hsojo.ojocourse.models;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class UserBean {
+public class UserModel {
     public String username = "";
     public String name = "";
     public String number = "";
     public String token = "";
 
-    public UserBean(String username, String name, String number, String token) {
+    public UserModel(String username, String name, String number, String token) {
         this.username = username;
         this.name = name;
         this.number = number;
         this.token = token;
     }
 
-    public UserBean() {
+    public UserModel() {
 
     }
 

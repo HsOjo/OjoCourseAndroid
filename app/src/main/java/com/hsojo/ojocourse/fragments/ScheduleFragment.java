@@ -19,9 +19,14 @@ import androidx.fragment.app.Fragment;
 import com.hsojo.ojocourse.MainActivity;
 import com.hsojo.ojocourse.R;
 import com.hsojo.ojocourse.adapters.CourseListAdapter;
-import com.hsojo.ojocourse.beans.CourseBean;
 import com.hsojo.ojocourse.dialogs.CourseDialog;
-import com.hsojo.ojocourse.services.OjoCourseService;
+import com.hsojo.ojocourse.models.CourseModel;
+import com.hsojo.ojocourse.services.ojocourse.OjoCourseService;
+import com.hsojo.ojocourse.services.ojocourse.request.CourseInfoRequest;
+import com.hsojo.ojocourse.services.ojocourse.request.CourseQueryRequest;
+import com.hsojo.ojocourse.services.ojocourse.response.BaseResponse;
+import com.hsojo.ojocourse.services.ojocourse.response.CourseInfo;
+import com.hsojo.ojocourse.services.ojocourse.response.CourseQuery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +44,7 @@ public class ScheduleFragment extends Fragment {
     Spinner sp_day;
     Button btn_query;
 
-    ArrayList<CourseBean> courses;
+    ArrayList<CourseModel> courses;
     ArrayList<String> weeks;
     ArrayList<String> days;
     HashMap<String, Integer> weeks_map;
@@ -47,12 +52,10 @@ public class ScheduleFragment extends Fragment {
 
     int selected_week = -1;
     int selected_day = -1;
-
+    OjoCourseService.Course service_course;
     private ArrayAdapter<String> adapter_week;
     private ArrayAdapter<String> adapter_day;
     private CourseListAdapter adapter_course;
-
-    OjoCourseService.Course service_course;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class ScheduleFragment extends Fragment {
         lv_course.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CourseBean course = (CourseBean) lv_course.getItemAtPosition(i);
+                CourseModel course = (CourseModel) lv_course.getItemAtPosition(i);
                 CourseDialog dialog = new CourseDialog(course);
                 assert getFragmentManager() != null;
                 dialog.show(getFragmentManager(), dialog.getTag());
@@ -130,12 +133,12 @@ public class ScheduleFragment extends Fragment {
     public void initSpinners() {
         final Context context = getContext();
 
-        Call<OjoCourseService.BaseResponse<OjoCourseService.CourseInfo>> call_info = this.service_course.info(new OjoCourseService.CourseInfoRequest(MainActivity.login_user.token));
-        call_info.enqueue(new Callback<OjoCourseService.BaseResponse<OjoCourseService.CourseInfo>>() {
+        Call<BaseResponse<CourseInfo>> call_info = this.service_course.info(new CourseInfoRequest(MainActivity.login_user.token));
+        call_info.enqueue(new Callback<BaseResponse<CourseInfo>>() {
             @SuppressLint("DefaultLocale")
             @Override
-            public void onResponse(Call<OjoCourseService.BaseResponse<OjoCourseService.CourseInfo>> call, Response<OjoCourseService.BaseResponse<OjoCourseService.CourseInfo>> response) {
-                OjoCourseService.BaseResponse<OjoCourseService.CourseInfo> body = response.body();
+            public void onResponse(Call<BaseResponse<CourseInfo>> call, Response<BaseResponse<CourseInfo>> response) {
+                BaseResponse<CourseInfo> body = response.body();
                 if (body != null) {
                     if (body.error == 0) {
                         days.clear();
@@ -182,13 +185,13 @@ public class ScheduleFragment extends Fragment {
                             }
                         });
                     } else {
-                        Toast.makeText(context, R.string.error_network, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, body.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<OjoCourseService.BaseResponse<OjoCourseService.CourseInfo>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<CourseInfo>> call, Throwable t) {
                 Toast.makeText(context, R.string.error_network, Toast.LENGTH_LONG).show();
             }
         });
@@ -197,29 +200,34 @@ public class ScheduleFragment extends Fragment {
     public void queryCourse() {
         final Context context = getContext();
 
-        Call<OjoCourseService.BaseResponse<OjoCourseService.CourseQuery>> call_query = service_course.query(new OjoCourseService.CourseQueryRequest(MainActivity.login_user.token, false, this.selected_week, this.selected_day));
-        call_query.enqueue(new Callback<OjoCourseService.BaseResponse<OjoCourseService.CourseQuery>>() {
+        Call<BaseResponse<CourseQuery>> call_query = service_course.query(new CourseQueryRequest(MainActivity.login_user.token, false, this.selected_week, this.selected_day));
+        call_query.enqueue(new Callback<BaseResponse<CourseQuery>>() {
+            @SuppressLint("DefaultLocale")
             @Override
-            public void onResponse(Call<OjoCourseService.BaseResponse<OjoCourseService.CourseQuery>> call, Response<OjoCourseService.BaseResponse<OjoCourseService.CourseQuery>> response) {
-                OjoCourseService.BaseResponse<OjoCourseService.CourseQuery> body = response.body();
+            public void onResponse(Call<BaseResponse<CourseQuery>> call, Response<BaseResponse<CourseQuery>> response) {
+                BaseResponse<CourseQuery> body = response.body();
                 if (body != null) {
                     if (body.error == 0) {
                         courses.clear();
-                        for (OjoCourseService.CourseQuery.Course course : body.data.courses) {
-                            CourseBean course_bean = new CourseBean(
+                        for (CourseModel course : body.data.courses) {
+                            CourseModel course_model = new CourseModel(
                                     course.class_, course.course, course.day, course.node, course.place, course.remark, course.teacher, course.teacher_spare, course.type, course.week
                             );
-                            courses.add(course_bean);
+                            courses.add(course_model);
                         }
                         adapter_course.notifyDataSetChanged();
+
+                        if (body.data.courses.size() == 0) {
+                            Toast.makeText(context, R.string.message_no_course, Toast.LENGTH_LONG).show();
+                        }
                     } else {
-                        Toast.makeText(context, R.string.error_network, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, body.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<OjoCourseService.BaseResponse<OjoCourseService.CourseQuery>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<CourseQuery>> call, Throwable t) {
                 Toast.makeText(context, R.string.error_network, Toast.LENGTH_LONG).show();
             }
         });

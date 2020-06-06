@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.hsojo.ojocourse.beans.UserBean;
+import com.hsojo.ojocourse.models.UserModel;
 
 public class SplashActivity extends Activity {
     private Handler handler = new Handler();
@@ -23,9 +23,9 @@ public class SplashActivity extends Activity {
     }
 
     private void startApp() {
-        UserBean userBean = new UserBean();
-        if (userBean.loadData(getApplicationContext())) {
-            MainActivity.login_user = userBean;
+        UserModel user = new UserModel();
+        if (user.loadData(getApplicationContext())) {
+            MainActivity.login_user = user;
             this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
         } else {
             this.startActivity(new Intent(SplashActivity.this, LoginActivity.class));

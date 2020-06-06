@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.hsojo.ojocourse.R;
-import com.hsojo.ojocourse.beans.CourseBean;
+import com.hsojo.ojocourse.models.CourseModel;
 
 public class CourseDialog extends DialogFragment {
     private TextView tv_name;
@@ -23,9 +23,9 @@ public class CourseDialog extends DialogFragment {
     private TextView tv_teacher;
     private TextView tv_type;
     private TextView tv_remark;
-    private CourseBean course;
+    private CourseModel course;
 
-    public CourseDialog(CourseBean course) {
+    public CourseDialog(CourseModel course) {
         this.course = course;
     }
 
@@ -55,7 +55,7 @@ public class CourseDialog extends DialogFragment {
     }
 
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
-    public void setCourse(CourseBean course) {
+    public void setCourse(CourseModel course) {
         String day = course.day == -1 ? "" : new String[]{"", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"}[course.day];
         String week = course.week == -1 ? "" : String.format("第%d周", course.week);
         String node = course.node == -1 ? "" : String.format("第%d节", course.node);

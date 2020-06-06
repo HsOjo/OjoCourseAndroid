@@ -9,15 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hsojo.ojocourse.R;
-import com.hsojo.ojocourse.beans.CourseBean;
+import com.hsojo.ojocourse.models.CourseModel;
 
 import java.util.List;
 
 public class CourseListAdapter extends BaseAdapter {
     private Context context;
-    private List<CourseBean> courses;
+    private List<CourseModel> courses;
 
-    public CourseListAdapter(Context context, List<CourseBean> courses) {
+    public CourseListAdapter(Context context, List<CourseModel> courses) {
         this.context = context;
         this.courses = courses;
     }
@@ -53,7 +53,7 @@ public class CourseListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        CourseBean course = this.courses.get(i);
+        CourseModel course = this.courses.get(i);
 
         String day = course.day == -1 ? "" : new String[]{"", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"}[course.day];
         String week = course.week == -1 ? "" : String.format("第%d周", course.week);
