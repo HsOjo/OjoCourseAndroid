@@ -19,7 +19,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public class OjoCourseService {
-    public static String API_URL = "https://ojocourse.hsojo.com";
+    public static String API_URL = "https://ojo-course-nuit.huawei.hsojo.com";
 
     public static User generateUser() {
         Retrofit retrofit = new Retrofit.Builder()
